@@ -2766,7 +2766,7 @@ s32 func_808358F0(Player* this, PlayState* play) {
         AnimationContext_SetCopyAll(play, this->skelAnime.limbCount, this->skelAnime2.jointTable,
                                     this->skelAnime.jointTable);
     } else {
-        LinkAnimation_Update(play, &this->skelAnime2);
+     //   LinkAnimation_Update(play, &this->skelAnime2);
     }
 
     func_80834EB8(this, play);

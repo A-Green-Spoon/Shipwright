@@ -1604,8 +1604,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                         (this->heldItemAction == PLAYER_IA_BOW_ICE) ||
                         (this->heldItemAction == PLAYER_IA_BOW_LIGHT) ||
                         (this->heldItemAction == PLAYER_IA_BOW) ||
-                        (this->heldItemAction == PLAYER_IA_SLINGSHOT ||
-                        (this->heldItemAction == PLAYER_IA_BOOMERANG)))) {
+                        (this->heldItemAction == PLAYER_IA_SLINGSHOT))) {
                 if (heldActor != NULL) {
                     MtxF sp44;
                     s32 pad;
@@ -1617,7 +1616,10 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                         Matrix_Translate(500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
                         Player_DrawHookshotReticle(play, this, RETICLE_MAX);
                     }
-                } else if (Player_HoldsBoomerang(this) != 0) {
+                } 
+            } else if (CVarGetInteger("gBoomerangReticle", 0) &&
+                        (this->heldItemAction == PLAYER_IA_BOOMERANG)) {
+                if (Player_HoldsBoomerang(this) != 0) {
                     MtxF sp44;
                     s32 pad;
 
@@ -1627,8 +1629,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     if (Player_HoldsBoomerang(this) != 0) {
                         Matrix_Translate(500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
                         Player_DrawHookshotReticle(play, this, 38600.0f);
-                    }                   
-                
+                    }
                 }
             }
 

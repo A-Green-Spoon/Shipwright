@@ -4960,9 +4960,9 @@ s32 func_8083AD4C(PlayState* play, Player* this) {
             
             cameraMode = shouldUseBowCamera ? CAM_MODE_BOWARROW : CAM_MODE_SLINGSHOT;
         } else {
-            if (CVarGetInteger("gBowReticle", 0)) {
+            if (CVarGetInteger("gBoomerangFirstPerson", 0)) {
                 cameraMode = CAM_MODE_FIRSTPERSON;
-                }
+            }
             else {
                 cameraMode = CAM_MODE_BOOMERANG;
             }
@@ -10287,8 +10287,11 @@ void Player_UpdateCamAndSeqModes(PlayState* play, Player* this) {
                     camMode = CAM_MODE_TALK;
                 } else if (this->stateFlags1 & PLAYER_STATE1_TARGET_LOCKED) {
                     if (this->stateFlags1 & PLAYER_STATE1_THREW_BOOMERANG) {
-                        camMode = CAM_MODE_NORMAL;
-                        //camMode = CAM_MODE_FOLLOWBOOMERANG;
+                        if (CVarGetInteger("gBoomerangFirstPerson", 0)) {
+                            camMode = CAM_MODE_NORMAL;
+                        } else {
+                            camMode = CAM_MODE_FOLLOWBOOMERANG;
+                        }
                     } else {
                         camMode = CAM_MODE_FOLLOWTARGET;
                     }
@@ -10299,8 +10302,11 @@ void Player_UpdateCamAndSeqModes(PlayState* play, Player* this) {
             } else if (this->stateFlags1 & PLAYER_STATE1_CHARGING_SPIN_ATTACK) {
                 camMode = CAM_MODE_CHARGE;
             } else if (this->stateFlags1 & PLAYER_STATE1_THREW_BOOMERANG) {
-                camMode = CAM_MODE_NORMAL;
-                //camMode = CAM_MODE_FOLLOWBOOMERANG;
+                if (CVarGetInteger("gBoomerangFirstPerson", 0)) {
+                    camMode = CAM_MODE_NORMAL;
+                } else {
+                    camMode = CAM_MODE_FOLLOWBOOMERANG;
+                }
                 Camera_SetParam(Play_GetCamera(play, 0), 8, this->boomerangActor);
             } else if (this->stateFlags1 & (PLAYER_STATE1_HANGING_OFF_LEDGE | PLAYER_STATE1_CLIMBING_LEDGE)) {
                 if (func_80833B2C(this)) {

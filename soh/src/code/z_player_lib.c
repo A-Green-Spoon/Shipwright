@@ -1626,7 +1626,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     Matrix_RotateZYX(-31200, -8500, 17000, MTXMODE_APPLY);
                     Matrix_Get(&sp44);
 
-                    if (Player_HoldsBoomerang(this) != 0) {
+                    if (func_8002DD78(this) != 0) {
                         Matrix_Translate(500.0f, 300.0f, 0.0f, MTXMODE_APPLY);
                         Player_DrawHookshotReticle(play, this, 38600.0f);
                     }

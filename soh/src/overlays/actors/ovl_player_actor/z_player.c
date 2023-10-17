@@ -10266,7 +10266,7 @@ void Player_UpdateCamAndSeqModes(PlayState* play, Player* this) {
                 } else if (this->stateFlags1 & PLAYER_STATE1_TARGET_LOCKED) {
                     if (this->stateFlags1 & PLAYER_STATE1_THREW_BOOMERANG) {
                         if (CVarGetInteger("gBoomerangFirstPerson", 0)) {
-                            camMode = CAM_MODE_NORMAL;
+                            camMode = CAM_MODE_TARGET;
                         } else {
                             camMode = CAM_MODE_FOLLOWBOOMERANG;
                         }
@@ -10281,7 +10281,7 @@ void Player_UpdateCamAndSeqModes(PlayState* play, Player* this) {
                 camMode = CAM_MODE_CHARGE;
             } else if (this->stateFlags1 & PLAYER_STATE1_THREW_BOOMERANG) {
                 if (CVarGetInteger("gBoomerangFirstPerson", 0)) {
-                    camMode = CAM_MODE_NORMAL;
+                    camMode = CAM_MODE_TARGET;
                 } else {
                     camMode = CAM_MODE_FOLLOWBOOMERANG;
                 }

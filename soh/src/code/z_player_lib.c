@@ -1627,7 +1627,7 @@ void Player_PostLimbDrawGameplay(PlayState* play, s32 limbIndex, Gfx** dList, Ve
                     MtxF sp44;
                     s32 pad;
 
-                    Matrix_RotateZYX(-31200, -8500, 17000, MTXMODE_APPLY);
+                    Matrix_RotateZYX(-31200, -8700, 17000, MTXMODE_APPLY);
                     Matrix_Get(&sp44);
 
                     if (Player_AimsBoomerang(this) != 0) {

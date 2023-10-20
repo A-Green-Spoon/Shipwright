@@ -1270,6 +1270,8 @@ void DrawCheatsMenu() {
         UIWidgets::EnhancementCombobox("gDekuStickCheat", DekuStickCheat, DEKU_STICK_NORMAL);
         UIWidgets::PaddedEnhancementCheckbox("No ReDead/Gibdo Freeze", "gNoRedeadFreeze", true, false);
         UIWidgets::Tooltip("Prevents ReDeads and Gibdos from being able to freeze you with their scream");
+        UIWidgets::PaddedEnhancementCheckbox("Hammer Jumpslash Damage", "gHammerJumpSlashDamage", true, false);
+        UIWidgets::Tooltip("Makes hammer jumpslash do double the damage of a hammer swing for all enemies");
         UIWidgets::Spacer(2.0f);
         if (ImGui::BeginMenu("Save States")) {
             ImGui::TextColored({ 0.85f, 0.85f, 0.0f, 1.0f }, "          " ICON_FA_EXCLAMATION_TRIANGLE);

@@ -1254,6 +1254,7 @@ void DrawCheatsMenu() {
         UIWidgets::Tooltip("Makes every surface in the game hookshot-able");
         UIWidgets::Spacer(2.0f);
         UIWidgets::EnhancementSliderFloat("Hookshot Reach Multiplier: %.1fx", "##gCheatHookshotReachMultiplier", "gCheatHookshotReachMultiplier", 1.0f, 5.0f, "", 1.0f, false);
+        UIWidgets::EnhancementSliderFloat("Boomerang Reach Multiplier: %.1fx", "##gCheatBoomerangReachMultiplier", "gCheatBoomerangReachMultiplier", 1.0f, 5.0f, "", 1.0f, false);
         UIWidgets::EnhancementSliderFloat("Bomb Timer Multiplier: %.1fx", "##gBombTimerMultiplier", "gBombTimerMultiplier", 0.1f, 5.0f, "", 1.0f, false);
         UIWidgets::PaddedEnhancementCheckbox("Moon Jump on L", "gMoonJumpOnL", true, false);
         UIWidgets::Tooltip("Holding L makes you float into the air");

@@ -2796,7 +2796,7 @@ s32 func_808359FC(Player* this, PlayState* play) {
         this->boomerangActor = &boomerang->actor;
         if (boomerang != NULL) {
             boomerang->moveTo = this->unk_664;
-            boomerang->returnTimer = 20;
+            boomerang->returnTimer = 20 * CVarGetFloat("gCheatBoomerangReachMultiplier", 1);
             this->stateFlags1 |= PLAYER_STATE1_THREW_BOOMERANG;
             if (!func_8008E9C4(this)) {
                 func_808355DC(this);

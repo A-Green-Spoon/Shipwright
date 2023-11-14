@@ -894,6 +894,8 @@ void DrawEnhancementsMenu() {
 
             UIWidgets::PaddedEnhancementCheckbox("Targetable Hookshot Reticle", "gHookshotableReticle", true, false);
             UIWidgets::Tooltip("Use a different color when aiming at hookshotable collision");
+            UIWidgets::PaddedEnhancementCheckbox("Hookshot Reticle on Actors", "gHookReticleOnActors", true, false);
+            UIWidgets::Tooltip("Show a reticle when the hookshot is aimed at an actor");
 
             ImGui::EndMenu();
         }

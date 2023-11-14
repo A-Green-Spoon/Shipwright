@@ -1578,7 +1578,8 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 hookshotRange
     Matrix_MultVec3f(&D_801260C8, &hookshotEnd);
 
     if (BgCheck_AnyLineTest3(&play->colCtx, &hookshotStart, &hookshotEnd, &firstHit, &colPoly, 1, 1, 1, 1, &bgId) || 
-        CollisionCheck_LineOCCheckAll(play, &play->colChkCtx, &hookshotStart, &hookshotEnd)) {
+        (CollisionCheck_LineOCHookshotReticle(play, &play->colChkCtx, &hookshotStart, &hookshotEnd) &&
+         CVarGetInteger("gHookReticleOnActors", 0))) {
         OPEN_DISPS(play->state.gfxCtx);
 
         WORLD_OVERLAY_DISP = Gfx_SetupDL(WORLD_OVERLAY_DISP, 0x07);
@@ -1595,7 +1596,8 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 hookshotRange
         gSPTexture(WORLD_OVERLAY_DISP++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
         gDPLoadTextureBlock(WORLD_OVERLAY_DISP++, gLinkAdultHookshotReticleTex, G_IM_FMT_I, G_IM_SIZ_8b, 64, 64, 0,
                             G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, 6, 6, G_TX_NOLOD, G_TX_NOLOD);
-        if (SurfaceType_IsHookshotSurface(&play->colCtx, colPoly, bgId) && CVarGetInteger("gHookshotableReticle", false)) {
+        if ((SurfaceType_IsHookshotSurface(&play->colCtx, colPoly, bgId) || CVarGetInteger("gHookReticleOnActors", 0))
+            && CVarGetInteger("gHookshotableReticle", false)) {
             const Color_RGBA8 defaultColor = { .r = 0, .g = 255, .b = 0, .a = 255 };
             const Color_RGBA8 color = CVarGetColor("gCosmetics.HookshotReticle_Target.Value", defaultColor);
             gDPSetPrimColor(WORLD_OVERLAY_DISP++, 0, 0, color.r, color.g, color.b, color.a);

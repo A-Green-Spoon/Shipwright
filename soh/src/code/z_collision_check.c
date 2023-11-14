@@ -3210,6 +3210,38 @@ s32 CollisionCheck_LineOC(PlayState* play, CollisionCheckContext* colChkCtx, Vec
     return result;
 }
 
+s32 CollisionCheck_LineOCHookshotReticle(PlayState* play, CollisionCheckContext* colChkCtx, Vec3f* a, Vec3f* b) {
+    ColChkLineFunc lineCheck;
+    Collider** col;
+    s32 i;
+    s32 include;
+    s32 result = 0;
+    u16 hookableActors[] = { ACTOR_EN_KAKASI2, ACTOR_EN_SI, ACTOR_OBJ_SYOKUDAI };
+    int hookableActorsLength = sizeof(hookableActors) / sizeof(hookableActors[0]);
+
+    for (col = colChkCtx->colOC; col < colChkCtx->colOC + colChkCtx->colOCCount; col++) {
+        if (CollisionCheck_SkipOC(*col) == 1) {
+            continue;
+        }
+        include = 0;
+        for (i = 0; i < hookableActorsLength; i++) {
+            if ((*col)->actor->id == hookableActors[i]) {
+                include = 1;
+                break;
+            }
+        }
+        if (include == 0) {
+            continue;
+        }
+        lineCheck = sOCLineCheckFuncs[(*col)->shape];
+        result = lineCheck(play, colChkCtx, (*col), a, b);
+        if (result) {
+            break;
+        }
+    }
+    return result;
+}
+
 /**
  * Checks if the line segment ab intersects any OC colliders. Returns true if there are any intersections and false
  * otherwise. Unused.

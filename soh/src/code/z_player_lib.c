@@ -1577,7 +1577,8 @@ void Player_DrawHookshotReticle(PlayState* play, Player* this, f32 hookshotRange
     D_801260C8.z = hookshotRange;
     Matrix_MultVec3f(&D_801260C8, &hookshotEnd);
 
-    if (BgCheck_AnyLineTest3(&play->colCtx, &hookshotStart, &hookshotEnd, &firstHit, &colPoly, 1, 1, 1, 1, &bgId)) {
+    if (BgCheck_AnyLineTest3(&play->colCtx, &hookshotStart, &hookshotEnd, &firstHit, &colPoly, 1, 1, 1, 1, &bgId) || 
+        CollisionCheck_LineOCCheckAll(play, &play->colChkCtx, &hookshotStart, &hookshotEnd)) {
         OPEN_DISPS(play->state.gfxCtx);
 
         WORLD_OVERLAY_DISP = Gfx_SetupDL(WORLD_OVERLAY_DISP, 0x07);

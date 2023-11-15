@@ -3224,6 +3224,10 @@ s32 CollisionCheck_LineOCHookshotReticle(PlayState* play, CollisionCheckContext*
             continue;
         }
         include = 0;
+        if (((*col)->actor->category & ACTORCAT_ENEMY || (*col)->actor->category & ACTORCAT_BOSS) &&
+            (*col)->atFlags & AT_ON) {
+            include = 1;
+        }
         for (i = 0; i < hookableActorsLength; i++) {
             if ((*col)->actor->id == hookableActors[i]) {
                 include = 1;

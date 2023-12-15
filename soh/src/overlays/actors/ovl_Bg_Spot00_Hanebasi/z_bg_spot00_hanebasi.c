@@ -170,7 +170,23 @@ void BgSpot00Hanebasi_DrawbridgeRiseAndFall(BgSpot00Hanebasi* this, PlayState* p
     Actor* childsChild;
     s16 angle = 80;
 
-    if (Math_ScaledStepToS(&this->dyna.actor.shape.rot.x, this->destAngle, 80)) {
+    // #region SOH [Enhancement]
+    if (CVarGetInteger("gDrawbridgeSpeed", 0) == 1) {
+        if (CHECK_QUEST_ITEM(QUEST_KOKIRI_EMERALD) && CHECK_QUEST_ITEM(QUEST_GORON_RUBY) &&
+            CHECK_QUEST_ITEM(QUEST_ZORA_SAPPHIRE) && !Flags_GetEventChkInf(EVENTCHKINF_ZELDA_FLED_HYRULE_CASTLE) &&
+            LINK_IS_CHILD) {
+            // leave angle alone during cutscene
+        } else {
+            if (!IS_DAY) {
+                angle *= CVarGetFloat("gDrawbridgeSpeedEvening", 1.0f);
+            } else {
+                angle *= CVarGetFloat("gDrawbridgeSpeedMorning", 1.0f);
+            }
+        }
+    }
+    // #endregion
+
+    if (Math_ScaledStepToS(&this->dyna.actor.shape.rot.x, this->destAngle, angle)) {
         this->actionFunc = BgSpot00Hanebasi_DrawbridgeWait;
     }
 

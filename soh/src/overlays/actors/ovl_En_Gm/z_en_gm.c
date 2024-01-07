@@ -340,16 +340,48 @@ void func_80A3E090(EnGm* this) {
     this->collider.dim.pos.z = vec2.z;
     Matrix_Pop();
     Matrix_Push();
-    Matrix_Translate(0.0f, 0.0f, 4300.0f, MTXMODE_APPLY);
+    Matrix_Translate(0.0f + 0.1f * CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f),
+                     0.0f - 0.5f * CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f),
+                     3800.0f + CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f) * 0.5f, MTXMODE_APPLY);
     Matrix_RotateZYX(this->actor.world.rot.x, this->actor.world.rot.y, this->actor.world.rot.z, MTXMODE_APPLY);
     vec1.x = vec1.y = vec1.z = 0.0f;
     Matrix_MultVec3f(&vec1, &this->talkPos);
     Matrix_Pop();
-    Matrix_Translate(0.0f, 0.0f, 3800.0f, MTXMODE_APPLY);
+    Matrix_Translate(0.0f + +0.1f * CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f),
+                     0.0f - 0.5f * CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f),
+                     3800.0f + CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f), MTXMODE_APPLY);
     Matrix_RotateZYX(this->actor.world.rot.x, this->actor.world.rot.y, this->actor.world.rot.z, MTXMODE_APPLY);
     vec1.x = vec1.y = vec1.z = 0.0f;
     Matrix_MultVec3f(&vec1, &this->actor.focus.pos);
     this->actor.focus.pos.y += 100.0f;
+    }
+
+s32 EnGm_OverrideLimbDraw(PlayState* play, s32 limb, Gfx** dList, Vec3f* pos, Vec3s* rot, void* thisx) {
+    EnGm* this = (EnGm*)thisx;
+    Vec3s vec1;
+    f32 float1;
+
+    if (limb == 17) {
+        Matrix_Translate(2800.0f + CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f),
+                         0.0f + 0.5f * CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f),
+                         0.0f + 0.1f * CVarGetFloat("gCosmetics.Goron_NeckLength", 0.0f), MTXMODE_APPLY);
+        //vec1 = this->interactInfo.headRot;
+        //float1 = (vec1.y / (f32)0x8000) * M_PI;
+        //Matrix_RotateX(float1, MTXMODE_APPLY);
+        //float1 = (vec1.x / (f32)0x8000) * M_PI;
+        //Matrix_RotateZ(float1, MTXMODE_APPLY);
+        Matrix_Translate(-2800.0f, 0.0f, 0.0f, MTXMODE_APPLY);
+    }
+    return 0;
+}
+
+void EnGm_PostLimbDraw(PlayState* play, s32 limbIndex, Gfx** dList, Vec3s* rot, void* thisx) {
+    EnGm* this = (EnGm*)thisx;
+    Vec3f D_80A4856C = { 600.0f, 0.0f, 0.0f };
+
+    if (limbIndex == 17) {
+        Matrix_MultVec3f(&D_80A4856C, &this->actor.focus.pos);
+    }
 }
 
 void EnGm_Draw(Actor* thisx, PlayState* play) {
@@ -362,7 +394,7 @@ void EnGm_Draw(Actor* thisx, PlayState* play) {
     Gfx_SetupDL_25Opa(play->state.gfxCtx);
     gSPSegment(POLY_OPA_DISP++, 0x08, SEGMENTED_TO_VIRTUAL(eyeTextures[this->eyeTexIndex]));
     gSPSegment(POLY_OPA_DISP++, 0x09, SEGMENTED_TO_VIRTUAL(gGoronCsMouthNeutralTex));
-    SkelAnime_DrawSkeletonOpa(play, &this->skelAnime, NULL, NULL, &this->actor);
+    SkelAnime_DrawSkeletonOpa(play, &this->skelAnime, EnGm_OverrideLimbDraw, EnGm_PostLimbDraw, &this->actor);
 
     CLOSE_DISPS(play->state.gfxCtx);
 

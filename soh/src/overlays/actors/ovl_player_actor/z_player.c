@@ -12896,15 +12896,50 @@ s32 func_8084C9BC(Player* this, PlayState* play) {
         if ((play->csCtx.state == CS_STATE_IDLE) && (play->transitionMode == TRANS_MODE_OFF) &&
             (EN_HORSE_CHECK_1(rideActor) || EN_HORSE_CHECK_4(rideActor))) {
             this->stateFlags2 |= PLAYER_STATE2_DO_ACTION_DOWN;
+            if (!CHECK_BTN_ANY(sControlInput->cur.button, BTN_R)) {
+                if (EN_HORSE_CHECK_1(rideActor) ||
+                    (EN_HORSE_CHECK_4(rideActor) && CHECK_BTN_ALL(sControlInput->press.button, BTN_A) &&
+                     !CHECK_BTN_ANY(sControlInput->press.button, BTN_R))) {
+                    rideActor->actor.child = NULL;
+                    func_80835DAC(play, this, Player_Action_8084D3E4, 0);
+                    this->unk_878 = sp34 - rideActor->actor.world.pos.y;
+                    Player_AnimPlayOnce(play, this,
+                                        (this->mountSide < 0) ? &gPlayerAnim_link_uma_left_down
+                                                              : &gPlayerAnim_link_uma_right_down);
+                    return 1;
+                }
+            }
+
+        }
+        if ((CHECK_BTN_ALL(sControlInput->cur.button, BTN_R))) {
+            this->stateFlags2 |= PLAYER_STATE2_DO_ACTION_DOWN;
 
             if (EN_HORSE_CHECK_1(rideActor) ||
-                (EN_HORSE_CHECK_4(rideActor) && CHECK_BTN_ALL(sControlInput->press.button, BTN_A))) {
+                (CHECK_BTN_ALL(sControlInput->press.button, BTN_A))) {
+                this->stateFlags2 |= PLAYER_STATE2_DO_ACTION_DOWN;
                 rideActor->actor.child = NULL;
-                func_80835DAC(play, this, Player_Action_8084D3E4, 0);
+                //(play, this, Player_Action_8084D3E4, 0);
+                this->stateFlags2 |= PLAYER_STATE2_DISABLE_ROTATION_ALWAYS;
+                //func_8084CBF4(this, 1.0f, 10.0f);
+
+                //if (LinkAnimation_Update(play, &this->skelAnime)) {
+                    EnHorse* rideActor = (EnHorse*)this->rideActor;
+
+                    func_8083C0E8(this, play);
+                    this->stateFlags1 &= ~PLAYER_STATE1_ON_HORSE;
+                    this->actor.parent = NULL;
+                    AREG(6) = 0;
+
+                    if (Flags_GetEventChkInf(EVENTCHKINF_EPONA_OBTAINED) || (DREG(1) != 0)) {
+                        gSaveContext.horseData.pos.x = rideActor->actor.world.pos.x;
+                        gSaveContext.horseData.pos.y = rideActor->actor.world.pos.y;
+                        gSaveContext.horseData.pos.z = rideActor->actor.world.pos.z;
+                        gSaveContext.horseData.angle = rideActor->actor.shape.rot.y;
+                    }
+                //} 
+
                 this->unk_878 = sp34 - rideActor->actor.world.pos.y;
-                Player_AnimPlayOnce(play, this,
-                              (this->mountSide < 0) ? &gPlayerAnim_link_uma_left_down
-                                                    : &gPlayerAnim_link_uma_right_down);
+                func_8083BCD0(this, play, 2);
                 return 1;
             }
         }

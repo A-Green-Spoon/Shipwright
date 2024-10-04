@@ -26,6 +26,9 @@
 #include "src/overlays/actors/ovl_Obj_Switch/z_obj_switch.h"
 #include "objects/object_link_boy/object_link_boy.h"
 #include "objects/object_link_child/object_link_child.h"
+#include "src/overlays/actors/ovl_Obj_Switch/z_obj_switch.h"
+#include "src/overlays/actors/ovl_En_Bom/z_en_bom.h"
+#include "src/overlays/actors/ovl_En_Bombf/z_en_bombf.h"
 
 extern "C" {
 #include <z64.h>
@@ -1445,6 +1448,35 @@ void RegisterPauseMenuHooks() {
     });
 }
 
+void RegisterNutsExplodeBombs() {
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnActorInit>([](void* refActor) {
+        Actor* actor = static_cast<Actor*>(refActor);
+
+    if (actor->id != ACTOR_EN_BOM || !CVarGetInteger(CVAR_ENHANCEMENT("NutsExplodeBombs"), 0)) {
+            return;
+    }
+    EnBom* enBom = static_cast<EnBom*>(refActor);
+
+    if (CVarGetInteger(CVAR_ENHANCEMENT("NutsExplodeBombs"), 0)) {
+            enBom->bombCollider.info.bumper.dmgFlags |= 1;
+        }
+    });
+
+    GameInteractor::Instance->RegisterGameHook<GameInteractor::OnActorUpdate>([](void* refActor) {
+        Actor* actor = static_cast<Actor*>(refActor);
+
+        if (actor->id != ACTOR_EN_BOMBF || !CVarGetInteger(CVAR_ENHANCEMENT("NutsExplodeBombs"), 0)) {
+            return;
+        }
+        EnBombf* enBombf = static_cast<EnBombf*>(refActor);
+
+        if (CVarGetInteger(CVAR_ENHANCEMENT("NutsExplodeBombs"), 0) &&
+            actor->params == BOMBFLOWER_BODY && enBombf->timer != 0) {
+            enBombf->bombCollider.info.bumper.dmgFlags |= 1;
+        }
+    });
+}
+
 void InitMods() {
     RegisterTTS();
     RegisterInfiniteMoney();
@@ -1485,4 +1517,5 @@ void InitMods() {
     RegisterPatchHandHandler();
     RegisterHurtContainerModeHandler();
     RegisterPauseMenuHooks();
+    RegisterNutsExplodeBombs();
 }

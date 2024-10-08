@@ -125,9 +125,6 @@ void EnBom_Init(Actor* thisx, PlayState* play) {
     Collider_SetCylinder(play, &this->bombCollider, thisx, &sCylinderInit);
     Collider_SetJntSph(play, &this->explosionCollider, thisx, &sJntSphInit, &this->explosionColliderItems[0]);
     this->explosionColliderItems[0].info.toucher.damage += (thisx->shape.rot.z & 0xFF00) >> 8;
-    //if (CVarGetInteger(CVAR_ENHANCEMENT("NutsExplodeBombs"), 0)) {
-    //    this->bombCollider.info.bumper.dmgFlags |= 1;
-    //}
 
     thisx->shape.rot.z &= 0xFF;
     if (thisx->shape.rot.z & 0x80) {

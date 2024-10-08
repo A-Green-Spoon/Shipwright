@@ -12,7 +12,6 @@ void RegisterNutsExplodeBombs() {
         GameInteractor::Instance->UnregisterGameHook<GameInteractor::OnActorInit>(
             nutsExplodeBombsActorInitHookId);
         nutsExplodeBombsActorInitHookId = 0;
-
     }
 
     if (nutsExplodeBombsActorUpdateHookId) {
@@ -36,9 +35,10 @@ void RegisterNutsExplodeBombs() {
         nutsExplodeBombsActorUpdateHookId = 
         GameInteractor::Instance->RegisterGameHook<GameInteractor::OnActorUpdate>([](void* refActor) {
             Actor* actor = static_cast<Actor*>(refActor);
-            if (actor->id != ACTOR_EN_BOMBF || !CVarGetInteger(CVAR_ENHANCEMENT("NutsExplodeBombs"), 0)) {
+            if (actor->id != ACTOR_EN_BOMBF) {
                 return;
             }
+
             EnBombf* enBombf = static_cast<EnBombf*>(refActor);
             if (actor->params == BOMBFLOWER_BODY && enBombf->timer != 0) {
                 enBombf->bombCollider.info.bumper.dmgFlags |= 1;

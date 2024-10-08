@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "soh/Enhancements/equipment/Equipment.h"
 
 #ifndef MODS_H
 #define MODS_H

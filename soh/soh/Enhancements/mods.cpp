@@ -10,6 +10,7 @@
 #include <soh/Enhancements/item-tables/ItemTableManager.h>
 #include "soh/Enhancements/nametag.h"
 
+
 #include "src/overlays/actors/ovl_En_Bb/z_en_bb.h"
 #include "src/overlays/actors/ovl_En_Dekubaba/z_en_dekubaba.h"
 #include "src/overlays/actors/ovl_En_Mb/z_en_mb.h"
@@ -1433,4 +1434,5 @@ void InitMods() {
     RegisterPatchHandHandler();
     RegisterHurtContainerModeHandler();
     RegisterPauseMenuHooks();
+    RegisterNutsExplodeBombs();
 }

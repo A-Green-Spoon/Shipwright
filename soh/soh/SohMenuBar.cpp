@@ -692,10 +692,10 @@ void DrawEnhancementsMenu() {
                 UIWidgets::Tooltip("Allows the bunny hood to be equipped normally from the pause menu as adult.");
                 UIWidgets::PaddedEnhancementCheckbox("Mask Select in Inventory", CVAR_ENHANCEMENT("MaskSelect"), true, false);
                 UIWidgets::Tooltip("After completing the mask trading sub-quest, press A and any direction on the mask slot to change masks");
-                if (UIWidgets::PaddedEnhancementCheckbox("Nuts explode bombs", CVAR_ENHANCEMENT("NutsExplodeBombs"), true, false)) {
+                if (UIWidgets::PaddedEnhancementCheckbox("Nuts explode bombs and bombflowers", CVAR_ENHANCEMENT("NutsExplodeBombs"), true, false)) {
                     RegisterNutsExplodeBombs();
                 };
-                UIWidgets::Tooltip("Makes nuts explode bombs, similar to how they interact with bombchus. This does not affect bombflowers.");
+                UIWidgets::Tooltip("Makes nuts explode bombs and bombflowers, similar to how they interact with bombchus.");
                 UIWidgets::PaddedEnhancementCheckbox("Equip Multiple Arrows at Once", CVAR_ENHANCEMENT("SeparateArrows"), true, false);
                 UIWidgets::Tooltip("Allow the bow and magic arrows to be equipped at the same time on different slots. (Note this will disable the behaviour of the 'Equip Dupe' glitch)");
                 UIWidgets::PaddedEnhancementCheckbox("Bow as Child/Slingshot as Adult", CVAR_ENHANCEMENT("BowSlingshotAmmoFix"), true, false);

@@ -1,7 +1,5 @@
 #include "soh/Enhancements/game-interactor/GameInteractor.h"
 #include "soh/Enhancements/game-interactor/GameInteractor_Hooks.h"
-#include <libultraship/bridge.h>
-#include "variables.h"
 #include "src/overlays/actors/ovl_En_Bom/z_en_bom.h"
 #include "src/overlays/actors/ovl_En_Bombf/z_en_bombf.h"
  
